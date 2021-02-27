@@ -1,4 +1,4 @@
-version: '2'
+version: '3.3'
 services:
     php-fpm:
         build:
@@ -33,8 +33,8 @@ services:
           - "$SSH_AUTH_SOCK:/ssh-auth.sock"
         command: tail -f /dev/null
     db:
-        image: mysql:latest
-        command: ["--default-authentication-plugin=mysql_native_password"]
+        image: mysql:5.7
+        command: --default-authentication-plugin=mysql_native_password
         build:
           context: ./mysql
           dockerfile: Dockerfile
@@ -42,17 +42,16 @@ services:
           - 13306:3306
         restart: always
         environment:
+          - MYSQL_ROOT_USER=root
+          - MYSQL_ROOT_PASSWORD=password
           - MYSQL_DATABASE=short_url_db
-          - MYSQL_USER=root
-          - MYSQL_PASSWORD=root
-          - MYSQL_ROOT_PASSWORD=root
         volumes:
             - ./mysql/sql-scripts/:/docker-entrypoint-initdb.d/:rw
             - ./mysql/my.cnf:/etc/mysql/my.cnf
-            - ${VOL_CODE}:/var/lib/mysql/
+            - ./my-db:/var/lib/mysql/
         command: ['mysqld', '--character-set-server=utf8']
-        networks:
-        - default
+        # networks:
+        # - default
 volumes:
-  persistent:
+  my-db:
 
