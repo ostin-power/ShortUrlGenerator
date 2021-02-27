@@ -31,7 +31,7 @@ services:
         volumes:
           - "${VOL_CODE}:/app"
           - "$SSH_AUTH_SOCK:/ssh-auth.sock"
-        command: tail -f /dev/null
+        command: ['composer', 'install']
     db:
         image: mysql:5.7
         command: --default-authentication-plugin=mysql_native_password
@@ -42,8 +42,6 @@ services:
           - 13306:3306
         restart: always
         environment:
-          - MYSQL_ROOT_USER=root
-          - MYSQL_ROOT_PASSWORD=password
           - MYSQL_DATABASE=short_url_db
         volumes:
             - ./mysql/sql-scripts/:/docker-entrypoint-initdb.d/:rw
