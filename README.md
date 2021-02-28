@@ -8,7 +8,7 @@ After pulling the repository, you need to change the **VOL_CODE** variable in **
 VOL_CODE=/path/to/your/local/folder
 ```
 
-After doing this, make sure you have docker installed on your machine.
+Make sure you have docker installed on your machine.
 Then going to /docker and start terminal.
 Execute:
 ```bash
@@ -20,7 +20,7 @@ docker-compose up --build
 - mysql
 - composer : this downloads all the libraries that the framework needs
 
-At the end of the building, you application microservices are available on 
+At the end of the building, your application microservices are available at 
 ```bash
 http://localhost:8000/
 ```
