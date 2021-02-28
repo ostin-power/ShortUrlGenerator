@@ -51,11 +51,10 @@ This api allow you to create a new short url from a string passed in input. The 
         "long_url": "https://www.github.com/"
     }
 ```
-This service checks if urls have not already been generated based on the parameter passed in input. This check is used to avoid conflicts between the generated short urls.
+This service checks if urls have not already been generated based on the parameter passed in input, and if the url really exists. This check is used to avoid conflicts between the generated short urls.
 At the end, if all check pass successfully, api returns a response like this:
-of the request like :
 ```json
-http://localhost/shortUrl/public/BAkaFa2
+"http://localhost:8000/BAkaFa2"
 ```
 ###### **DELETE /api/shortened**
 This api allows you to delete a short url generated previously. The request must be DELETE and it expects a json of the following type as input:
