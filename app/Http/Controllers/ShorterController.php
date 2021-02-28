@@ -45,14 +45,13 @@ class ShorterController extends Controller
         ]);
 
         $long       = $request->input('long_url');
-        die(json_encode($long));
         $generated  = $this->_shortUrlRepository->createNewUrl($long);
 
         if($generated == false) {
             $generated = 'Url already exist';
         }
 
-        return response()->json($generated);
+        return response($generated);
     }
 
     /**

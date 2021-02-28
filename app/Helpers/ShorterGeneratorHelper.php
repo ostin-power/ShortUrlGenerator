@@ -11,8 +11,6 @@ class ShorterGeneratorHelper
     protected static $checkUrlExists = false;
     protected static $codeLength = 7;
 
-    CONST prefix = 'http://localhost:8080/';
-
     /**
      * Generate the shorted url
      *
@@ -22,18 +20,17 @@ class ShorterGeneratorHelper
     public function generate(string $url) {
 
         if(empty($url)){
-            throw new Exception("No URL was supplied.");
+            die("No URL was supplied.");
         }
 
         if(self::$checkUrlExists){
             if (!$this->verifyUrlExists($url)){
-                throw new Exception("URL does not appear to exist.");
+                die("URL does not appear to exist.");
             }
         }
 
         $shortCode = $this->createShortCode($url);
-
-        return self::prefix.$shortCode;
+        return $shortCode;
     }
 
     protected function verifyUrlExists($url){

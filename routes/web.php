@@ -30,5 +30,5 @@ $router->group(['prefix' => 'api'], function() use ($router){
  */
 $router->group(['prefix' => 'api/counter'], function() use ($router){
     $router->get('/all', 'ShorterController@allCount');
-    $router->get('/{url}', 'ShorterController@singleCount');
+    $router->get('/{id}', 'ShorterController@singleCount');
 });

@@ -10,17 +10,26 @@ use Exception;
 class ShortUrlRepository implements ShortUrlInterface
 {
     public function checkRedirection($url) {
-        $redirection = Url::select('long_url')->where('short_url', $url)->get()->first();
+        $redirection = Url::select('id','long_url','redirect')->where('short_url', $url)->get()->first();
 
-        if($redirection->isEmpty()){
-            throw new Exception("Url passed not exist, redirection failed");
+        if(!$redirection){
+            die("Url passed not exist, redirection failed");
         }
+        $count  = $redirection->redirect +1;
+        $update = Url::find($redirection->id);
 
-        return $redirection->short_url;
+        $update->redirect = $count;
+        $update->save();
+
+        return $redirection->long_url;
     }
 
     public function getAllUrl() {
         $all = Url::all();
+
+        foreach ($all as $a) {
+            $a->short_url = env('APP_URL').$a->short_url;
+        }
         return $all;
     }
 
@@ -28,9 +37,8 @@ class ShortUrlRepository implements ShortUrlInterface
 
         $exist = Url::where('long_url', $long)->get()->first();
 
-        if($exist->isEmpty()) {
-
-            $this->shortUrlGenerator = app()->make('shorterUrlGeneratorHelper');
+        if(!$exist) {
+            $this->shortUrlGenerator = app()->make('ShorterGeneratorHelper');
             $short = $this->shortUrlGenerator->generate($long);
 
             $n            = new Url();
@@ -38,7 +46,7 @@ class ShortUrlRepository implements ShortUrlInterface
             $n->short_url = $short;
 
             if($n->save()) {
-                return $short;
+                return env('APP_URL').$short;
             }
         }
 
@@ -49,7 +57,7 @@ class ShortUrlRepository implements ShortUrlInterface
         $url = Url::find($id);
 
         if(!$url->delete()) {
-            throw new Exception("Failded to delete url id: ".$id);
+            die("Failded to delete url id: ".$id);
         }
         return true;
     }
@@ -57,8 +65,8 @@ class ShortUrlRepository implements ShortUrlInterface
     public function getSingleRedirection($id) {
         $url = Url::find($id);
 
-        if($url->isEmpty()) {
-            throw new Exception("Url id not found");
+        if(!$url) {
+            die("Url id not found");
         }
         return $url->redirect;
     }
