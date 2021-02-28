@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interfaces\ShortUrlInterface;
 
 use App\Models\Url;
-use Exception;
 
 class ShortUrlRepository implements ShortUrlInterface
 {

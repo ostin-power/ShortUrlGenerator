@@ -64,7 +64,7 @@ This api allows you to delete a short url generated previously. The request must
         "id": 1 
     }
 ```
-If there aren't errors (the id you passed isn't exits) the response that it return is 
+If there aren't errors (eg. the id you passed isn't exits) the response that it return is 
 ```json
 "Url deleted successfully"
 ```

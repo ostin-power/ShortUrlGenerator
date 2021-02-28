@@ -18,9 +18,14 @@ services:
           - ${VOL_CODE}:/var/www/html/
           - ./nginx/nginx.conf:/etc/nginx/nginx.conf
           - ./nginx/sites-enabled/shorturl.conf:/etc/nginx/sites-enabled/shorturl.conf
+      environment:
+        - MYSQL_DATABASE=short_url_db
+        - MYSQL_USER=admin
+        - MYSQL_PASSWORD=password
+        - MYSQL_HOST=db
       ports:
         - "${WEB_PORTS}:8000"
-      links:
+      depends_on:
         - db
       restart: unless-stopped
     composer:
@@ -43,13 +48,16 @@ services:
         restart: always
         environment:
           - MYSQL_DATABASE=short_url_db
+          - MYSQL_USER=admin
+          - MYSQL_PASSWORD=password
+          - MYSQL_ROOT_PASSWORD=password
         volumes:
             - ./mysql/sql-scripts/:/docker-entrypoint-initdb.d/:rw
             - ./mysql/my.cnf:/etc/mysql/my.cnf
             - ./my-db:/var/lib/mysql/
-        command: ['mysqld', '--character-set-server=utf8']
+        command: [ 'mysqld', '--character-set-server=utf8']
         # networks:
         # - default
 volumes:
-  my-db:
+  my-db: { driver: local }
 

@@ -18,6 +18,16 @@
 --
 -- Current Database: `short_url_db`
 --
+-- CREATE USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+-- GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+
+-- CREATE USER 'admin'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+-- GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
+-- #
+-- CREATE DATABASE IF NOT EXISTS `short_url_db` COLLATE 'utf8_general_ci' ;
+-- GRANT ALL ON `short_url_db`.* TO 'root'@'%' ;
+-- FLUSH PRIVILEGES ;
+
 
 USE `short_url_db`;
 
